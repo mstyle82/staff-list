@@ -101,6 +101,11 @@
                         <div class="col-md-1"></div>
                     </div>
                 @endif
+                        </div>
+                        <div class="col-md-1"></div>
+                    </div>
+                @endif
+
         <div class="row mt-3">
         <div class="col-md-1"></div>
             <div class="col-xs-2 mx-3">
@@ -129,7 +134,7 @@
                          @endif
                      @endforeach
                 </div>
-                </div>
+            </div>
             </div>
             <div class="col-md-8">
                 @yield('content')
@@ -139,6 +144,12 @@
         <main class="py-4">
         </main>
     </div>
+        <main class="py-4">
+        </main>
+    </div>
+    
+
+
 
 </body>
 </html>
