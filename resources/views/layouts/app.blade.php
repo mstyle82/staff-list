@@ -104,7 +104,23 @@
                         </div>
                         <div class="col-md-1"></div>
                     </div>
-                @endif
+
+
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript">
+
+      $('#alertfadeout').fadeIn("slow", function () {
+        //コールバックで3秒後にフェードアウト
+        $(this).delay(3000).fadeOut("slow");
+      });
+
+    </script>
+
+
+
+
 
         <div class="row mt-3">
         <div class="col-md-1"></div>
@@ -147,7 +163,7 @@
         <main class="py-4">
         </main>
     </div>
-    
+
 
 
 

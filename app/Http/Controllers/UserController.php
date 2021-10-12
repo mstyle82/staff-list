@@ -166,13 +166,19 @@ class UserController extends Controller
         $sum_id = $users->count(); //社員数カウント
         $staff_statuses = Staff_status::where('status', '=', 0)->get();
 
+        $sum_staff_statuses = Staff_status::select('staff_statuses.*', DB::raw('count(staff_status) as count'))
+             ->leftJoin('users', 'users.staff_status', '=', 'staff_statuses.id')
+             ->groupBy('staff_statuses.id')
+             ->where('staff_statuses.status', '=', 0)
+             ->orderBy('staff_statuses.display_order')
+             ->get();
+
         $sum_b_members = User::where('staff_status', '=', 1)->count(); //役員数カウント
         $sum_member = User::where('staff_status', '=', 3)->count(); //正社員数カウント
         $sum_ts_member = User::where('staff_status', '=', 2)->count(); //時短社員数カウント
         $sum_fp_member = User::where('staff_status', '=', 4)->count(); //フルパートスタッフ数カウント
         $sum_p_member = User::where('staff_status', '=', 5)->count(); //パートスタッフ数カウント
         $sum_pt_member = User::where('staff_status', '=', 6)->count(); //バイト数カウント
-
 
         //平均年齢算出
         $age_datas = User::select('birthday')->get();
@@ -202,7 +208,7 @@ class UserController extends Controller
         }
         $avg_los = intval($sum / $count);
 
-        return view('dashboard', compact('users', 'sum_id','groups', 'grouplists', 'sum_b_members', 'sum_member', 'sum_ts_member', 'sum_fp_member', 'sum_p_member', 'sum_pt_member', 'avg_age', 'avg_los', 'staff_statuses'));
+        return view('dashboard', compact('users', 'sum_id','groups', 'grouplists', 'sum_b_members', 'sum_member', 'sum_ts_member', 'sum_fp_member', 'sum_p_member', 'sum_pt_member', 'avg_age', 'avg_los', 'staff_statuses', 'sum_staff_statuses'));
 
     }
 

@@ -17,7 +17,7 @@
                         <p style="font-weight:bold">郵便番号：</p>
                     </div>
                     <div class="col-md-6">
-                        <p><?php echo e($lists->name); ?></p>
+                        <p><?php echo e($lists->post_code); ?></p>
                     </div>
                     <div class="col-md-3">
                         <p><small class="text-muted ex4"><?php echo e($lists->kana); ?></small></p>
@@ -45,7 +45,7 @@
                     </div>
                     <div class="col-md-3 ex4">
                         <p><i class="far fa-regular fa-gift"></i> <?php echo e($lists->birthday); ?></p>
-                        <p><p class='mx-5'><?php echo e($age); ?>&emsp;歳</p></p>
+                        <p><p class='mx-5'>&emsp;<?php echo e($age); ?>歳</p></p>
                     </div>
                     <div class="col-md-3 ex4">
                         <p style="font-weight:bold">Enail：</p>
@@ -107,15 +107,11 @@
                     <p style="font-weight:bold">社員区分：</p>
                 </div>
                 <div class="col-md-3 ex4">
-
-
                    <?php if( $lists->staff_status == 0 ): ?>
                       <p>未選択</p>
-
                    <?php else: ?>
                       <p><?php echo e($staff_status->name); ?></p>
                    <?php endif; ?>
-
                 </div>
                 <div class="col-md-2 ex4">
                     <p style="font-weight:bold">役職：</p>
@@ -176,12 +172,11 @@
                 <div class="col-md-2 mt-1">
                     <p style="font-weight:bold">入社年月日：</p>
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-4 d-flex">
                     <p><?php echo e($lists->first_day); ?></p>
+                    <p>（勤続<?php echo e($los); ?>年）</p>
                 </div>
-                <div class="col-md-8">
-                    <p>勤続<?php echo e($los); ?>年</p>
-                </div>
+                <div class="col-md-6"></div>
                 <div class="col-md-2 mt-1">
                     <p style="font-weight:bold">退職日：</p>
                 </div>

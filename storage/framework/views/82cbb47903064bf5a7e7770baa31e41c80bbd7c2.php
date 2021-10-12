@@ -11,8 +11,6 @@
 
     <!-- Scripts -->
     <script src="<?php echo e(asset('js/app.js')); ?>" defer></script>
-    <!--<script src="js/jquery-3.5.1.min.js"></script>-->
-    <!--<script src="js/bootstrap.min.js"></script>-->
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -25,7 +23,6 @@
 
 </head>
 <body>
-
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-dark bg-dark shadow-sm">
             <div class="container">
@@ -94,13 +91,12 @@
                 </div>
             </div>
         </nav>
-        <script>$("#myToast").toast({ delay: 3000 }).toast('show');</script>
          <!--左カラム-->
                 <?php if(session('flash_message')): ?>
                     <div class="row">
                         <div class="col-md-7"></div>
                         <div class="col-md-12">
-                            <div class="flash_message alert alert-success text-center toast" id="myToast" role="alert">
+                            <div class="flash_message alert alert-success text-center"　id="alertfadeout" role="alert">
                                 <?php echo e(session('flash_message')); ?>
 
                             </div>
@@ -108,6 +104,26 @@
                         <div class="col-md-1"></div>
                     </div>
                 <?php endif; ?>
+                        </div>
+                        <div class="col-md-1"></div>
+                    </div>
+
+
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript">
+
+      $('#alertfadeout').fadeIn("slow", function () {
+        //コールバックで3秒後にフェードアウト
+        $(this).delay(3000).fadeOut("slow");
+      });
+
+    </script>
+
+
+
+
 
         <div class="row mt-3">
         <div class="col-md-1"></div>
@@ -147,7 +163,10 @@
         <main class="py-4">
         </main>
     </div>
-    
+        <main class="py-4">
+        </main>
+    </div>
+
 
 
 
