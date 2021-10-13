@@ -64,7 +64,7 @@ class GroupController extends Controller
 
          Group::insert(['name'=> $posts['get_name'],'user_id' => \Auth::id()]);
 
-         return redirect('conf-group');
+         return redirect('conf-group')->with('flash_message', '登録が完了しました');
 
     }
 
@@ -87,12 +87,12 @@ class GroupController extends Controller
      */
     public function edit(Group $group)
     {
-        // $posts = $group->all();   
+        // $posts = $group->all();
         // //$posts = Group::select('id', 'name', 'status','deleted_at', 'created_at')
         // //           ->get();
-                   
+
         // dd($posts);
-        
+
         // Group::where('id', $posts['id'] )
         // ->update(['name' => $posts['name'],'status' => $posts['status'], ]);
 
@@ -117,7 +117,7 @@ class GroupController extends Controller
          ->update(['name' => $posts['name'],'status' => $posts['status'], ]);
 
 
-        return redirect('conf-group');
+        return redirect('conf-group')->with('flash_message', '更新が完了しました');
 
     }
 

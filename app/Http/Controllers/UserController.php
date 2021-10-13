@@ -52,7 +52,7 @@ class UserController extends Controller
         $groups = Group::where('status', '=', 0)
                 ->orderBy('display_order', 'ASC')
                 ->get();
-
+        //メイン情報
         $users = User::all();
         $id = $request->id;
         $lists = User::findOrFail($id);
@@ -69,8 +69,6 @@ class UserController extends Controller
         $titles = Title::where('status', '=', 0)->get();
         $teams = Team::where('status', '=', 0)->get();
         $work_locations = Work_location::where('status', '=', 0)->get();
-
-
 
         //年齢算出
         $age_data = User::where('id', '=', $id )
@@ -98,12 +96,10 @@ class UserController extends Controller
         //ファイル出力
         $owned_files = Has_file::leftjoin('owned_files','has_files.id', '=', 'owned_files.file_id')
                  ->where('owned_files.user_id', '=', $id)->get();
-
         $includefile_names = [];
         foreach($owned_files as $owned_file){
             array_push($includefile_names, $owned_file['name']);
         }
-        //$file_names = explode("/", implode($includefile_names));
 
         return view('list', compact('id','lists','users', 'staff_status', 'attribute','groups','titles','teams','work_locations', 'grouplists', 'age', 'los','owned_tags', 'owned_files', 'work_time'));
     }
@@ -126,14 +122,16 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        //画像登録
         $post = $request->all();
         $id = $request->id;
-        $imagedata = $request->imagefileobj;
-        $data = explode(',', $imagedata); // 三嶋追加
-        $image = base64_decode($data[1]); // 三嶋変更
-        $filename = $request->file('profile_image')->getClientOriginalName();
 
         if($request->hasfile('profile_image')){
+            $imagedata = $request->imagefileobj;
+            $data = explode(',', $imagedata); // 三嶋追加
+            $image = base64_decode($data[1]); // 三嶋変更
+            $filename = $request->file('profile_image')->getClientOriginalName();
+
             $path = \Storage::put('public/'.$filename, $image);
             $path = explode('/', $path);
             $user = user::find($id);
@@ -141,7 +139,11 @@ class UserController extends Controller
             $user->save();
         }else{
             $path = null;
+            $image = null;
+
+            return redirect('edit-list/'.$post['id'])->with('flash_message1', '画像が選択されていません');
         }
+
         return redirect('list/'.$post['id'])->with('flash_message', '画像を変更しました');
     }
     /**
@@ -153,7 +155,6 @@ class UserController extends Controller
     public function show()
     {
         //ダッシュボード
-
         $users = User::all();
         //左カラム社員一覧用
         $grouplists = Attribute::leftjoin('users','attributes.user_id', '=', 'users.id')
@@ -162,24 +163,23 @@ class UserController extends Controller
         $groups = Group::where('status', '=', 0)
                         ->orderBy('display_order', 'ASC')
                         ->get();;
-
-        $sum_id = $users->count(); //社員数カウント
         $staff_statuses = Staff_status::where('status', '=', 0)->get();
+        $sum_id = $users->count(); //社員数カウント
 
+        // 社員区分ごとの人数算出
         $sum_staff_statuses = Staff_status::select('staff_statuses.*', DB::raw('count(staff_status) as count'))
              ->leftJoin('users', 'users.staff_status', '=', 'staff_statuses.id')
              ->groupBy('staff_statuses.id')
              ->where('staff_statuses.status', '=', 0)
+             ->where('users.status', '=', 0)
              ->orderBy('staff_statuses.display_order')
              ->get();
-
-        $sum_b_members = User::where('staff_status', '=', 1)->count(); //役員数カウント
-        $sum_member = User::where('staff_status', '=', 3)->count(); //正社員数カウント
-        $sum_ts_member = User::where('staff_status', '=', 2)->count(); //時短社員数カウント
-        $sum_fp_member = User::where('staff_status', '=', 4)->count(); //フルパートスタッフ数カウント
-        $sum_p_member = User::where('staff_status', '=', 5)->count(); //パートスタッフ数カウント
-        $sum_pt_member = User::where('staff_status', '=', 6)->count(); //バイト数カウント
-
+        //人員換算
+        $work_time = 0;
+        foreach($sum_staff_statuses as $sum_staff_status) {
+            $time = $sum_staff_status->work_time * $sum_staff_status->count;
+            $work_time += $time;
+        }
         //平均年齢算出
         $age_datas = User::select('birthday')->get();
         $sum = 0;
@@ -208,7 +208,7 @@ class UserController extends Controller
         }
         $avg_los = intval($sum / $count);
 
-        return view('dashboard', compact('users', 'sum_id','groups', 'grouplists', 'sum_b_members', 'sum_member', 'sum_ts_member', 'sum_fp_member', 'sum_p_member', 'sum_pt_member', 'avg_age', 'avg_los', 'staff_statuses', 'sum_staff_statuses'));
+        return view('dashboard', compact('users', 'sum_id','groups', 'grouplists',  'avg_age', 'avg_los', 'staff_statuses', 'sum_staff_statuses', 'work_time'));
 
     }
 
@@ -249,7 +249,6 @@ class UserController extends Controller
         $owned_tags = Tag::leftjoin('owned_tags','tags.id', '=', 'owned_tags.tag_id')->get();
 
         return view('list-card', compact('users','grouplists','groups','titles','teams', 'owned_tags', 'grouplists1'));
-
     }
 
     /**
@@ -271,7 +270,7 @@ class UserController extends Controller
         //role判定用ログインユーザID
         $login_user = User::where('id', '=', \Auth::id())
                    ->first();
-
+        //メイン情報
         $users = User::all();
         $edit_data = User::findOrFail($id);
         $edit2_data = Attribute::all();
@@ -279,8 +278,6 @@ class UserController extends Controller
         $titles = Title::where('status', '=', 0)->get();
         $teams = Team::where('status', '=', 0)->get();
         $work_locations = Work_location::where('status', '=', 0)->get();
-
-
         $group_id = Attribute::leftjoin('departments','attributes.user_id', '=', 'departments.id')
                  ->where('attributes.user_id', '=', $id)
                  ->first();
@@ -290,7 +287,6 @@ class UserController extends Controller
                  ->where('attributes.user_id', '=', $id)->first();
         $work_location_id = Attribute::leftjoin('work_locations','attributes.user_id', '=', 'work_locations.id')
                  ->where('attributes.user_id', '=', $id)->first();
-
         //タグ
         $tags = Tag::where('status', '=', 0)->get();
         $owned_tags = Tag::leftjoin('owned_tags','tags.id', '=', 'owned_tags.tag_id')

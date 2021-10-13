@@ -11,6 +11,7 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -20,6 +21,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+
 
 </head>
 <body>
@@ -90,38 +92,25 @@
             </div>
         </nav>
          <!--左カラム-->
-                @if (session('flash_message'))
-                    <div class="row">
-                        <div class="col-md-7"></div>
-                        <div class="col-md-12">
-                            <div class="flash_message alert alert-success text-center"　id="alertfadeout" role="alert">
-                                {{ session('flash_message') }}
-                            </div>
-                        </div>
-                        <div class="col-md-1"></div>
+                @if($toastr = session('flash_message'))
+                <div class="toast" id="myToast">
+                    <div class="alert alert-success text-center mb-0" role="alert">
+                        {{ session('flash_message') }}
                     </div>
+                </div>
+                @elseif($toastr = session('flash_message1'))
+                <div class="toast" id="myToast">
+                    <div class="alert alert-danger text-center mb-0" role="alert">
+                        {{ session('flash_message1') }}
+                    </div>
+                </div>
                 @endif
-                        </div>
-                        <div class="col-md-1"></div>
-                    </div>
 
-
-
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script type="text/javascript">
-
-      $('#alertfadeout').fadeIn("slow", function () {
-        //コールバックで3秒後にフェードアウト
-        $(this).delay(3000).fadeOut("slow");
-      });
-
-    </script>
-
-
-
-
-
+                <script>
+                    window.addEventListener('DOMContentLoaded', function(){
+                    $("#myToast").toast({ delay: 3000 }).toast('show');
+                    });
+                </script>
         <div class="row mt-3">
         <div class="col-md-1"></div>
             <div class="col-xs-2 mx-3">
@@ -159,13 +148,6 @@
         </div>
         <main class="py-4">
         </main>
-    </div>
-        <main class="py-4">
-        </main>
-    </div>
-
-
-
 
 </body>
 </html>

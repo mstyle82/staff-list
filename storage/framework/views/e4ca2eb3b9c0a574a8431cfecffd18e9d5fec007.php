@@ -23,7 +23,13 @@
                 <div class="col-md-2 mt-1">
                     <p><?php echo e($avg_los); ?>年</p>
                 </div>
-                <div class="col-md-4 mt-1"></div>
+                <div class="col-md-2 mt-1">
+                    <p style="font-weight:bold">人員換算：</p>
+                </div>
+                <div class="col-md-2 mt-1">
+                    <p><?php echo e($work_time); ?>人区</p>
+                </div>
+
                 <?php $__currentLoopData = $sum_staff_statuses; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $sum_staff_status): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                 <div class="col-md-2 mt-1">
                     <div class="d-flex">
@@ -32,51 +38,9 @@
                     </div>
                 </div>
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-
             </div>
         </div>
-
-
     </div>
-
-                <!--    <div class="col-md-2 mt-1">-->
-                <!--    <p style="font-weight:bold">役員：</p>-->
-                <!--</div>-->
-                <!--<div class="col-md-2 mt-1">-->
-                <!--    <p><?php echo e($sum_b_members); ?>名</p>-->
-                <!--</div>-->
-                <!--<div class="col-md-2 mt-1">-->
-                <!--    <p style="font-weight:bold">正社員：</p>-->
-                <!--</div>-->
-                <!--<div class="col-md-2 mt-1">-->
-                <!--    <p><?php echo e($sum_member); ?>名</p>-->
-                <!--</div>-->
-                <!--<div class="col-md-2 mt-1">-->
-                <!--    <p style="font-weight:bold">時短社員：</p>-->
-                <!--</div>-->
-                <!--<div class="col-md-2 mt-1">-->
-                <!--    <p><?php echo e($sum_ts_member); ?>名</p>-->
-                <!--</div>-->
-                <!--<div class="col-md-2 mt-1">-->
-                <!--    <p style="font-weight:bold">フルパート：</p>-->
-                <!--</div>-->
-                <!--<div class="col-md-2 mt-1">-->
-                <!--    <p><?php echo e($sum_fp_member); ?></p>-->
-                <!--</div>-->
-                <!--  <div class="col-md-2 mt-1">-->
-                <!--    <p style="font-weight:bold">パート：</p>-->
-                <!--</div>-->
-                <!--<div class="col-md-2 mt-1">-->
-                <!--    <p><?php echo e($sum_p_member); ?>名</p>-->
-                <!--</div>-->
-                <!--<div class="col-md-2 mt-1">-->
-                <!--     <p style="font-weight:bold">バイト：</p>-->
-                <!--</div>-->
-                <!--<div class="col-md-2 mt-1">-->
-                <!--    <p><?php echo e($sum_pt_member); ?>名</p>-->
-                <!--</div>-->
-
-
 <?php $__env->stopSection(); ?>
 
 

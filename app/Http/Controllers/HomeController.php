@@ -37,11 +37,10 @@ class HomeController extends Controller
         $groups = Group::where('status', '=', 0)
                         ->orderBy('display_order', 'ASC')
                         ->get();
-
+        //メイン情報
         $users = User::all();
         $list = User::where('id', '=', \Auth::id())
                ->first();
-
         $titles = Title::where('status', '=', 0)->get();
         $teams = Team::where('status', '=', 0)->get();
         $work_locations = Work_location::where('status', '=', 0)->get();
@@ -90,8 +89,7 @@ class HomeController extends Controller
         $groups = Group::where('status', '=', 0)
                          ->orderBy('display_order', 'ASC')
                          ->get();
-
-
+        //メイン情報
         $users = User::all();
         $edit_data = user::where('id', '=', \Auth::id())
                          ->first();
@@ -111,10 +109,6 @@ class HomeController extends Controller
     {
         $post = $request->all();
         $id = $request->id;
-        // $imagedata = $request->imagefileobj;
-        // $data = explode(',', $imagedata); // 三嶋追加
-        // $image = base64_decode($data[1]); // 三嶋変更
-        // $filename= $request->file('profile_image')->getClientOriginalName();
 
             User::where('id', '=', $post['id'])
                 ->update(['id' => $post['id'],
@@ -127,15 +121,6 @@ class HomeController extends Controller
                     'home_tell' => $post['home_tell'] ,
                     'office_tell' => $post['office_tell'],]);
 
-        //     if($request->hasfile('profile_image')){
-        //     $path = \Storage::put('public/'.$filename, $image);
-        //     $path = explode('/', $path);
-        //     $user = user::find($id);
-        //     $user->profile_image = $filename;
-        //     $user->save();
-        // }else{
-        //     $path = null;
-    // }
         return redirect('/')->with('flash_message', '更新が完了しました');
 
     }
@@ -147,14 +132,17 @@ class HomeController extends Controller
      */
     public function store(Request $request)
     {
+    //プロフィール画像登録
     $post = $request->all();
         $id = $request->id;
-        $imagedata = $request->imagefileobj;
-        $data = explode(',', $imagedata); // 三嶋追加
-        $image = base64_decode($data[1]); // 三嶋変更
-        $filename = $request->file('profile_image')->getClientOriginalName();
+
 
         if($request->hasfile('profile_image')){
+            $imagedata = $request->imagefileobj;
+            $data = explode(',', $imagedata); // 三嶋追加
+            $image = base64_decode($data[1]); // 三嶋変更
+            $filename = $request->file('profile_image')->getClientOriginalName();
+
             $path = \Storage::put('public/'.$filename, $image);
             $path = explode('/', $path);
             $user = user::find($id);
@@ -163,7 +151,9 @@ class HomeController extends Controller
         }else{
             $path = null;
             $image = null;
+            
+            return redirect('edit-myprof')->with('flash_message1', '画像が選択されていません');
         }
-        return redirect('/');
+        return redirect('/')->with('flash_message', '画像を変更しました');
     }
 }

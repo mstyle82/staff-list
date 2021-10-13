@@ -56,7 +56,7 @@ class TitleController extends Controller
 
          Title::insert(['name'=> $posts['get_name'], 'display_order' => $posts['get_order'], 'user_id' => \Auth::id()]);
 
-         return redirect('conf-title');
+         return redirect('conf-title')->with('flash_message', '登録が完了しました');
     }
 
     /**
@@ -97,7 +97,7 @@ class TitleController extends Controller
          ->update(['name' => $posts['name'], 'display_order' => $posts['order'], 'status' => $posts['status'], ]);
 
 
-        return redirect('conf-title');
+        return redirect('conf-title')->with('flash_message', '更新が完了しました');
     }
 
     /**

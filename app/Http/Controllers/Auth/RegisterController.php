@@ -96,6 +96,6 @@ class RegisterController extends Controller
            //User_dataset::insert(['user_id' => $id]);
            $GLOBALS['id'] = $id;
        });
-       return redirect('/list/'. $GLOBALS['id'] );
+       return redirect('/list/'. $GLOBALS['id'] )->with('flash_message', '新規ユーザー登録が完了しました');
     }
 }

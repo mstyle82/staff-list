@@ -60,7 +60,7 @@ class TeamController extends Controller
 
          Team::insert(['name'=> $posts['get_name'], 'display_order' => $posts['get_order'], 'user_id' => \Auth::id()]);
 
-         return redirect('conf-team');
+         return redirect('conf-team')->with('flash_message', '登録が完了しました');
     }
 
     /**
@@ -101,7 +101,7 @@ class TeamController extends Controller
          ->update(['name' => $posts['name'], 'display_order' => $posts['order'], 'status' => $posts['status'], ]);
 
 
-        return redirect('conf-team');
+        return redirect('conf-team')->with('flash_message', '更新が完了しました');
     }
 
     /**

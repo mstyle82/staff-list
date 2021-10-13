@@ -58,7 +58,7 @@ class TagController extends Controller
 
          Tag::insert(['name'=> $posts['get_name'], 'display_order' => $posts['get_order'], 'color'=> $posts['get_color'],'user_id' => \Auth::id()]);
 
-         return redirect('conf-tag');
+         return redirect('conf-tag')->with('flash_message', '登録が完了しました');
     }
 
     /**
@@ -98,7 +98,7 @@ class TagController extends Controller
          Tag::where('id', $posts['id'] )
          ->update(['name' => $posts['name'], 'display_order' => $posts['order'], 'status' => $posts['status'], 'color' => $posts['color'], ]);
 
-        return redirect('conf-tag');
+        return redirect('conf-tag')->with('flash_message', '更新が完了しました');
     }
 
     /**

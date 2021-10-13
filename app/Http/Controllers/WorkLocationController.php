@@ -61,7 +61,7 @@ class WorkLocationController extends Controller
 
          Work_location::insert(['name'=> $posts['get_name'], 'display_order' => $posts['get_order'], 'user_id' => \Auth::id()]);
 
-         return redirect('conf-worklocation');
+         return redirect('conf-worklocation')->with('flash_message', '登録が完了しました');
     }
 
     /**
@@ -101,7 +101,7 @@ class WorkLocationController extends Controller
          Work_location::where('id', $posts['id'] )
          ->update(['name' => $posts['name'], 'display_order' => $posts['order'], 'status' => $posts['status'], ]);
 
-        return redirect('conf-worklocation');
+        return redirect('conf-worklocation')->with('flash_message', '更新が完了しました');
     }
 
     /**

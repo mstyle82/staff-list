@@ -57,7 +57,7 @@ class StaffStatusController extends Controller
 
          Staff_status::insert(['name'=> $posts['get_name'], 'display_order' => $posts['get_order'],  'work_time' => $posts['get_worktime'], 'user_id' => \Auth::id()]);
 
-         return redirect('conf-staff');
+         return redirect('conf-staff')->with('flash_message', '登録が完了しました');
     }
 
     /**
@@ -99,7 +99,7 @@ class StaffStatusController extends Controller
                      ->update(['name' => $posts['name'], 'display_order' => $posts['order'], 'work_time' => $posts['worktime'], 'status' => $posts['status'], ]);
 
 
-        return redirect('conf-staff');
+        return redirect('conf-staff')->with('flash_message', '更新が完了しました');
     }
 
     /**

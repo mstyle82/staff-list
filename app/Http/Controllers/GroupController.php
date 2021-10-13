@@ -67,7 +67,7 @@ class GroupController extends Controller
 
          Group::insert(['name'=> $posts['get_name'], 'display_order' => $posts['get_order'], 'user_id' => \Auth::id()]);
 
-         return redirect('conf-group');
+         return redirect('conf-group')->with('flash_message', '登録が完了しました');
 
     }
 
@@ -119,7 +119,7 @@ class GroupController extends Controller
               ->update(['name' => $posts['name'], 'display_order' => $posts['order'], 'status' => $posts['status'], ]);
 
 
-        return redirect('conf-group');
+        return redirect('conf-group')->with('flash_message', '更新が完了しました');
 
     }
 

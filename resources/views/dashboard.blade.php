@@ -25,7 +25,13 @@
                 <div class="col-md-2 mt-1">
                     <p>{{ $avg_los }}年</p>
                 </div>
-                <div class="col-md-4 mt-1"></div>
+                <div class="col-md-2 mt-1">
+                    <p style="font-weight:bold">人員換算：</p>
+                </div>
+                <div class="col-md-2 mt-1">
+                    <p>{{ $work_time }}人区</p>
+                </div>
+
                 @foreach($sum_staff_statuses as $sum_staff_status)
                 <div class="col-md-2 mt-1">
                     <div class="d-flex">
@@ -34,51 +40,9 @@
                     </div>
                 </div>
                 @endforeach
-
             </div>
         </div>
-
-
     </div>
-
-                <!--    <div class="col-md-2 mt-1">-->
-                <!--    <p style="font-weight:bold">役員：</p>-->
-                <!--</div>-->
-                <!--<div class="col-md-2 mt-1">-->
-                <!--    <p>{{ $sum_b_members }}名</p>-->
-                <!--</div>-->
-                <!--<div class="col-md-2 mt-1">-->
-                <!--    <p style="font-weight:bold">正社員：</p>-->
-                <!--</div>-->
-                <!--<div class="col-md-2 mt-1">-->
-                <!--    <p>{{ $sum_member }}名</p>-->
-                <!--</div>-->
-                <!--<div class="col-md-2 mt-1">-->
-                <!--    <p style="font-weight:bold">時短社員：</p>-->
-                <!--</div>-->
-                <!--<div class="col-md-2 mt-1">-->
-                <!--    <p>{{ $sum_ts_member }}名</p>-->
-                <!--</div>-->
-                <!--<div class="col-md-2 mt-1">-->
-                <!--    <p style="font-weight:bold">フルパート：</p>-->
-                <!--</div>-->
-                <!--<div class="col-md-2 mt-1">-->
-                <!--    <p>{{ $sum_fp_member }}</p>-->
-                <!--</div>-->
-                <!--  <div class="col-md-2 mt-1">-->
-                <!--    <p style="font-weight:bold">パート：</p>-->
-                <!--</div>-->
-                <!--<div class="col-md-2 mt-1">-->
-                <!--    <p>{{ $sum_p_member }}名</p>-->
-                <!--</div>-->
-                <!--<div class="col-md-2 mt-1">-->
-                <!--     <p style="font-weight:bold">バイト：</p>-->
-                <!--</div>-->
-                <!--<div class="col-md-2 mt-1">-->
-                <!--    <p>{{ $sum_pt_member }}名</p>-->
-                <!--</div>-->
-
-
 @endsection
 
 
